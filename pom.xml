@@ -38,5 +38,6 @@
 
     <modules>
         <module>app</module>
+        <module>ui</module>
     </modules>
 </project>
