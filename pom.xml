@@ -29,4 +29,7 @@
         </dependency>
     </dependencies>
 
+    <modules>
+        <module>app</module>
+    </modules>
 </project>
