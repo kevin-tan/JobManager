@@ -1,7 +1,7 @@
 package com.jobmanager.app.job;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jobmanager.app.job.schedule.CRONSchedule;
 import com.jobmanager.app.job.status.Status;
 import lombok.Data;
 
@@ -9,12 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import java.util.Timer;
 
 @Data
 @Entity
 public abstract class Job extends Thread {
-
     /* Id of the job to be used to save into the database */
     @Id
     private Long id;
@@ -26,7 +24,7 @@ public abstract class Job extends Thread {
     /* CRON schedule for the job to run */
     @Transient
     @JsonIgnore
-    private Timer schedule;
+    private CRONSchedule schedule;
 
     /**
      * Creating a job with no CRON schedule.
@@ -49,10 +47,21 @@ public abstract class Job extends Thread {
      *
      * @see #run()
      */
-    public Job(Runnable work, Timer schedule) {
+    public Job(Runnable work, CRONSchedule schedule) {
         super(work);
-        jobStatus = Status.SCHEDULED;
         this.schedule = schedule;
+    }
+
+    /**
+     * Overridden run method to set the status of current job.
+     *
+     * @see #run()
+     */
+    @Override
+    public void run(){
+        this.jobStatus = Status.RUNNING;
+        super.run();
+        this.jobStatus = Status.FINISHED;
     }
 
 }
