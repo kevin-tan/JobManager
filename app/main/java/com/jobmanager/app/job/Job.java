@@ -21,13 +21,13 @@ public abstract class Job extends Thread {
     @Column(name = "JOB_STATUS")
     private Status jobStatus;
 
-    /* CRON schedule for the job to run */
+    /* CRONBuilder schedule for the job to run */
     @Transient
     @JsonIgnore
     private CRONSchedule schedule;
 
     /**
-     * Creating a job with no CRON schedule.
+     * Creating a job with no CRONBuilder schedule.
      *
      * @param work The work that the job will perform at a scheduled time.
      *
@@ -42,7 +42,7 @@ public abstract class Job extends Thread {
      * Creating fully initialize job.
      *
      * @param work     The work that the job will perform at a scheduled time.
-     * @param schedule The CRON schedule for the job. It can be a fixed
+     * @param schedule The CRONBuilder schedule for the job. It can be a fixed
      *                 schedule or a one time run.
      *
      * @see #run()
