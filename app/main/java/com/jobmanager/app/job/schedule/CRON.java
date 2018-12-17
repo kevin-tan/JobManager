@@ -1,42 +1,35 @@
 package com.jobmanager.app.job.schedule;
 
-public class CRONBuilder {
-
-    /**
-     * CRON private static inner-class for holding the CRON structure
-     */
-    private static class CRON {
-        Long minute;
-        Long hour;
-        Long dayOfMonth;
-        Long month;
-        Long dayOfWeek;
-
-        /**
-         * Create CRONBuilder with specified minute, hour, dayOfMoth, month and dayOfWeek
-         *
-         * @param minute     [0 - 59] long value
-         * @param hour       [0 - 23] long value
-         * @param dayOfMonth [1 - 31] long value
-         * @param month      [1 - 12] long value
-         * @param dayOfWeek  [0 - 6] long value
-         */
-        CRON(Long minute, Long hour, Long dayOfMonth, Long month, Long dayOfWeek) {
-            this.minute = minute;
-            this.hour = hour;
-            this.dayOfMonth = dayOfMonth;
-            this.month = month;
-            this.dayOfWeek = dayOfWeek;
-        }
-    }
+/**
+ * Class to hold the CRON structure
+ */
+public class CRON {
 
     /* WILDCARD(-1L) represents * as in Linux/Unix CRONBuilder */
     private final static Long WILDCARD = -1L;
 
+    Long minute;
+    Long hour;
+    Long dayOfMonth;
+    Long month;
+    Long dayOfWeek;
+
     /**
-     * CRONBuilder is a CRON builder. No instance of {@link CRONBuilder} should exist.
+     * Create CRON with specified minute, hour, dayOfMoth, month and dayOfWeek
+     *
+     * @param minute     [0 - 59] long value
+     * @param hour       [0 - 23] long value
+     * @param dayOfMonth [1 - 31] long value
+     * @param month      [1 - 12] long value
+     * @param dayOfWeek  [0 - 6] long value
      */
-    private CRONBuilder() {}
+    CRON(Long minute, Long hour, Long dayOfMonth, Long month, Long dayOfWeek) {
+        this.minute = minute;
+        this.hour = hour;
+        this.dayOfMonth = dayOfMonth;
+        this.month = month;
+        this.dayOfWeek = dayOfWeek;
+    }
 
     /* To allow the building of a CRONBuilder hourly-schedule */
     public static CRON buildHourlyCronSchedule() {
@@ -62,5 +55,4 @@ public class CRONBuilder {
     public static CRON buildYearlyCronSchedule() {
         return new CRON(0L, 0L, 1L, 1L, WILDCARD);
     }
-
 }

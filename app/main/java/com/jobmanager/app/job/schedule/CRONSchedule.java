@@ -11,7 +11,7 @@ public class CRONSchedule {
     private boolean runOnce;
 
     /* CRONBuilder schedule for the job to run */
-    private CRONBuilder schedule;
+    private CRON schedule;
 
     /* Whether the job is running or awaiting to run
        if true, running, else awaiting to run */
@@ -23,7 +23,7 @@ public class CRONSchedule {
      * @param runOnce if {@code true}, job will run once only,
      *                all custom CRONBuilder schedule will be ignore ({@link #schedule} is null)
      */
-    public CRONSchedule(boolean runOnce, CRONBuilder schedule) {
+    public CRONSchedule(boolean runOnce, CRON schedule) {
         this.runOnce = runOnce;
         if (!runOnce) this.schedule = schedule;
         this.running = false;
