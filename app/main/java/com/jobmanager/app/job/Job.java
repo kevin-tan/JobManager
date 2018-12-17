@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 public abstract class Job extends Thread {
     /* Id of the job to be used to save into the database */
     @Id
-    private Long id;
+    private Long job_id;
 
     /* The current status of the job */
     @Column(name = "JOB_STATUS")
@@ -27,19 +27,15 @@ public abstract class Job extends Thread {
     private CRONSchedule schedule;
 
     /**
-     * Creating a job with no CRONBuilder schedule.
-     *
-     * @param work The work that the job will perform at a scheduled time.
-     *
-     * @see #run()
+     * Creating a job with no {@link #target} or {@link #schedule}
+     * {@link #jobStatus} is set to {@code Status.NOT_SCHEDULED}
      */
-    public Job(Runnable work) {
-        super(work);
+    public Job() {
         jobStatus = Status.NOT_SCHEDULED;
     }
 
     /**
-     * Creating fully initialize job.
+     * Creating fully initialize job with a CRON schedule.
      *
      * @param work     The work that the job will perform at a scheduled time.
      * @param schedule The CRONBuilder schedule for the job. It can be a fixed
