@@ -15,7 +15,10 @@ import java.util.List;
 @Component
 public class JobManager {
 
+    /* Component used to retrieve the factory to create a job */
     private JobCreator jobCreator;
+
+    /* List of jobs currently being managed by the JobManager */
     private final List<Job> jobPool = new LinkedList<>();
 
     @Autowired
@@ -36,6 +39,7 @@ public class JobManager {
      * Create and add new job to current {@link #jobPool}
      *
      * @param className The String name of class to be created
+     * @return {@link Job} Returns the job created
      */
     public Job createAndAddNewJob(String className) {
         Job job = jobCreator.getInstanceForClassName(className);
@@ -47,6 +51,7 @@ public class JobManager {
      * Create new job
      *
      * @param className The String name of class to be created
+     * @return {@link Job} Returns the job created
      */
     public Job createNewJob(String className) {
         return jobCreator.getInstanceForClassName(className);

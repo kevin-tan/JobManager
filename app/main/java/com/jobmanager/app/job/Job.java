@@ -29,6 +29,8 @@ public abstract class Job extends Thread {
     /**
      * Creating a job with no {@link #target} or {@link #schedule}
      * {@link #jobStatus} is set to {@code Status.NOT_SCHEDULED}
+     *
+     * @return {@link Job} Returns an empty Job instance
      */
     public Job() {
         jobStatus = Status.NOT_SCHEDULED;
@@ -37,9 +39,11 @@ public abstract class Job extends Thread {
     /**
      * Creating fully initialize job with a CRON schedule.
      *
-     * @param work     The work that the job will perform at a scheduled time.
+     * @param work     The work that the job will perform at a scheduled time
      * @param schedule The CRONBuilder schedule for the job. It can be a fixed
-     *                 schedule or a one time run.
+     *                 schedule or a one time run
+     *
+     * @return {@link Job} Returns fully initialized Job instance
      *
      * @see #run()
      */
