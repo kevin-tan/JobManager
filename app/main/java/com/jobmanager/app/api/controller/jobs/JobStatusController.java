@@ -1,4 +1,4 @@
-package com.jobmanager.app.controller.jobs;
+package com.jobmanager.app.api.controller.jobs;
 
 import org.springframework.stereotype.Controller;
 

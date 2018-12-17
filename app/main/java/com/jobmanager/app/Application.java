@@ -10,8 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
  * Created by Kevin Tan 2018-12-15
  */
 
-@ComponentScan("com.jobmanager.app")
-@EntityScan("com.jobmanager.app.dao")
+@ComponentScan(basePackages = {"com.jobmanager.app", "com.jobmanager.database.dao"})
+@EntityScan("com.jobmanager.app")
 @SpringBootApplication
 public class Application {
 
