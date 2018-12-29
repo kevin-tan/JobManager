@@ -2,7 +2,6 @@ package com.jobmanager.app.job.schedule;
 
 import lombok.Data;
 
-import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 
 import static com.jobmanager.app.job.schedule.CRON.WILDCARD;
@@ -40,25 +39,7 @@ public class CRONSchedule {
         this.running = false;
     }
 
-
-    // TODO: Need to adjust according current date to CRON for next execution
     public void calculateNextExecution(ZonedDateTime current){
-        int year = current.getYear();
-
-        if(schedule.getMinute() == WILDCARD || schedule.getHour() == WILDCARD){
-
-        }else{
-            if(schedule.getDayOfWeek() == WILDCARD){
-
-            }
-            if(schedule.getDayOfMonth() == WILDCARD){
-
-            }
-            if(schedule.getMonth() == WILDCARD){
-
-            }
-        }
-        // 2018 - 12 - 29 - 6 - 9 - 53
-        nextExecutionTime = current;
+        nextExecutionTime = schedule.getNextExecution(current);
     }
 }

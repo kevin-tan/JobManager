@@ -2,6 +2,8 @@ package com.jobmanager.app.job.schedule;
 
 import lombok.Data;
 
+import java.time.ZonedDateTime;
+
 /**
  * Class to hold the CRON structure
  */
@@ -36,6 +38,11 @@ public class CRON {
         this.dayOfMonth = (dayOfMonth < 0 || dayOfMonth > 31) ? WILDCARD : dayOfMonth;
         this.month = (month < 1 || month > 12) ? WILDCARD : month;
         this.dayOfWeek = (dayOfWeek < 1 || dayOfWeek > 6) ? WILDCARD : dayOfWeek;
+    }
+
+    public ZonedDateTime getNextExecution(ZonedDateTime current){
+
+        return current;
     }
 
     /**
