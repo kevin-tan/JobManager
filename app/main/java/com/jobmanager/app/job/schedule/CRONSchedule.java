@@ -2,6 +2,9 @@ package com.jobmanager.app.job.schedule;
 
 import lombok.Data;
 
+import java.time.DayOfWeek;
+import java.time.ZonedDateTime;
+
 /**
  * CRONSchedule is used to set the CRONBuilder schedule for a {@link com.jobmanager.app.job.Job} to run on
  */
@@ -17,6 +20,9 @@ public class CRONSchedule {
        if true, running, else awaiting to run */
     private boolean running;
 
+    /* The next date time that the job will execute (if run once is false) */
+    private ZonedDateTime nextExecutionTime;
+
     /**
      * Create a CRONSchedule that will perform the job at a fixed rate, or once only
      *
@@ -25,7 +31,23 @@ public class CRONSchedule {
      */
     public CRONSchedule(boolean runOnce, CRON schedule) {
         this.runOnce = runOnce;
-        if (!runOnce) this.schedule = schedule;
+        if (!runOnce) {
+            this.schedule = schedule;
+            calculateNextExecution();
+        }
         this.running = false;
+    }
+
+    public void calculateNextExecution(){
+        ZonedDateTime current = ZonedDateTime.now();
+
+        int year = current.getYear();
+        int month = schedule.getMonth();
+        int dayOfMonth = schedule.getDayOfMonth();
+        DayOfWeek dayOfWeek = current.getDayOfWeek().plus(DayOfWeek.of(schedule.getDayOfWeek()).getValue() - current.getDayOfWeek().getValue());
+
+        int hour = schedule.getHour();
+        int minute = schedule.getMinute();
+        nextExecutionTime = current;
     }
 }

@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
@@ -42,9 +43,7 @@ public abstract class Job extends Thread {
      * @param work     The work that the job will perform at a scheduled time
      * @param schedule The CRONBuilder schedule for the job. It can be a fixed
      *                 schedule or a one time run
-     *
      * @return {@link Job} Returns fully initialized Job instance
-     *
      * @see #run()
      */
     public Job(Runnable work, CRONSchedule schedule) {
@@ -58,10 +57,16 @@ public abstract class Job extends Thread {
      * @see #run()
      */
     @Override
-    public void run(){
-        this.jobStatus = Status.RUNNING;
-        super.run();
-        this.jobStatus = Status.FINISHED;
+    public void run() {
+        do {
+            jobStatus = Status.SCHEDULED;
+            ZonedDateTime now = ZonedDateTime.now();
+            while(now.isBefore(schedule.getNextExecutionTime()));
+            jobStatus = Status.RUNNING;
+            schedule.calculateNextExecution();
+            super.run();
+        } while (!schedule.isRunOnce());
+        jobStatus = Status.FINISHED;
     }
 
 }
