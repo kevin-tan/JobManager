@@ -63,7 +63,7 @@ public abstract class Job extends Thread {
             ZonedDateTime now = ZonedDateTime.now();
             while(now.isBefore(schedule.getNextExecutionTime()));
             jobStatus = Status.RUNNING;
-            schedule.calculateNextExecution();
+            schedule.calculateNextExecution(now);
             super.run();
         } while (!schedule.isRunOnce());
         jobStatus = Status.FINISHED;

@@ -5,6 +5,8 @@ import lombok.Data;
 import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 
+import static com.jobmanager.app.job.schedule.CRON.WILDCARD;
+
 /**
  * CRONSchedule is used to set the CRONBuilder schedule for a {@link com.jobmanager.app.job.Job} to run on
  */
@@ -33,21 +35,30 @@ public class CRONSchedule {
         this.runOnce = runOnce;
         if (!runOnce) {
             this.schedule = schedule;
-            calculateNextExecution();
+            calculateNextExecution(ZonedDateTime.now());
         }
         this.running = false;
     }
 
-    public void calculateNextExecution(){
-        ZonedDateTime current = ZonedDateTime.now();
 
+    // TODO: Need to adjust according current date to CRON for next execution
+    public void calculateNextExecution(ZonedDateTime current){
         int year = current.getYear();
-        int month = schedule.getMonth();
-        int dayOfMonth = schedule.getDayOfMonth();
-        DayOfWeek dayOfWeek = current.getDayOfWeek().plus(DayOfWeek.of(schedule.getDayOfWeek()).getValue() - current.getDayOfWeek().getValue());
 
-        int hour = schedule.getHour();
-        int minute = schedule.getMinute();
+        if(schedule.getMinute() == WILDCARD || schedule.getHour() == WILDCARD){
+
+        }else{
+            if(schedule.getDayOfWeek() == WILDCARD){
+
+            }
+            if(schedule.getDayOfMonth() == WILDCARD){
+
+            }
+            if(schedule.getMonth() == WILDCARD){
+
+            }
+        }
+        // 2018 - 12 - 29 - 6 - 9 - 53
         nextExecutionTime = current;
     }
 }

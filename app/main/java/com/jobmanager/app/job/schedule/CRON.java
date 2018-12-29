@@ -11,7 +11,7 @@ public class CRON {
     /**
      * WILDCARD(-1L) represents * as in Linux/Unix CRONBuilder
      */
-    private final static int WILDCARD = -1;
+    public final static int WILDCARD = -1;
 
     private int month;
     private int dayOfMonth;
@@ -28,12 +28,14 @@ public class CRON {
      * @param month      [1 - 12] long value
      * @param dayOfWeek  [0 - 6] long value
      */
-    CRON(int minute, int hour, int dayOfMonth, int month, int dayOfWeek) {
-        this.minute = minute;
-        this.hour = hour;
-        this.dayOfMonth = dayOfMonth;
-        this.month = month;
-        this.dayOfWeek = dayOfWeek;
+
+    // TODO : Make enum for each to prevent invalid inputs
+    CRON(int minute, int hour, int dayOfWeek, int month, int dayOfMonth) {
+        this.minute = (minute < 0 || minute > 59) ? WILDCARD : minute;
+        this.hour = (hour < 1 || hour > 23) ? WILDCARD : hour;
+        this.dayOfMonth = (dayOfMonth < 0 || dayOfMonth > 31) ? WILDCARD : dayOfMonth;
+        this.month = (month < 1 || month > 12) ? WILDCARD : month;
+        this.dayOfWeek = (dayOfWeek < 1 || dayOfWeek > 6) ? WILDCARD : dayOfWeek;
     }
 
     /**
@@ -61,21 +63,21 @@ public class CRON {
      * To allow the building of a CRONBuilder weekly-schedule (once a week at midnight on Sunday morning)
      */
     public static CRON buildWeeklyCronSchedule() {
-        return new CRON(0, 0, WILDCARD, WILDCARD, 0);
+        return new CRON(0, 0, 0, WILDCARD, WILDCARD);
     }
 
     /**
      * To allow the building of a CRONBuilder monthly-schedule (once a month at midnight on first day of month)
      */
     public static CRON buildMonthlyCronSchedule() {
-        return new CRON(0, 0, 1, WILDCARD, WILDCARD);
+        return new CRON(0, 0, WILDCARD, WILDCARD, 1);
     }
 
     /**
      * To allow the building of a CRONBuilder annually(yearly)-schedule (once a year at midnight on 1st of January)
      */
     public static CRON buildYearlyCronSchedule() {
-        return new CRON(0, 0, 1, 1, WILDCARD);
+        return new CRON(0, 0, WILDCARD, 1, 1);
     }
 
 }
