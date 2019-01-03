@@ -1,4 +1,4 @@
-package com.jobmanager.app.entity.job.schedule;
+package com.jobmanager.app.entity.job.schedule.time;
 
 import java.time.ZonedDateTime;
 

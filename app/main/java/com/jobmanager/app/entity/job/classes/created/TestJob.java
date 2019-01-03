@@ -1,7 +1,7 @@
 package com.jobmanager.app.entity.job.classes.created;
 
 import com.jobmanager.app.entity.job.Job;
-import com.jobmanager.app.entity.job.schedule.basic.BasicTime;
+import com.jobmanager.app.entity.job.schedule.time.basic.BasicTime;
 import com.jobmanager.app.entity.job.schedule.scheduler.JobTimeScheduler;
 
 import javax.persistence.Entity;

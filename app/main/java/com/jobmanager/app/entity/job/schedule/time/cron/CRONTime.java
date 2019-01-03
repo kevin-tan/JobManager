@@ -1,6 +1,6 @@
-package com.jobmanager.app.entity.job.schedule.cron;
+package com.jobmanager.app.entity.job.schedule.time.cron;
 
-import com.jobmanager.app.entity.job.schedule.JobTime;
+import com.jobmanager.app.entity.job.schedule.time.JobTime;
 import lombok.Data;
 
 import java.time.Duration;
@@ -8,11 +8,11 @@ import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAmount;
 
 /**
- * Class to hold the CRON structure
+ * Class to hold the CRONTime structure
  */
 
 @Data
-public class CRON implements JobTime {
+public class CRONTime implements JobTime {
 
     public final static String WILDCARD = "*";
     public final static String HYPHEN = "-";
@@ -27,7 +27,7 @@ public class CRON implements JobTime {
     private TemporalAmount executionTimeAdjustment;
 
     /**
-     * Create CRON with specified minute, hour, dayOfMoth, month and dayOfWeek
+     * Create CRONTime with specified minute, hour, dayOfMoth, month and dayOfWeek
      *
      * @param minute     [0 - 59] long value & '*', ',' , '-'
      * @param hour       [0 - 23] long value & '*', ',' , '-'
@@ -35,20 +35,20 @@ public class CRON implements JobTime {
      * @param month      [1 - 12] long value & '*', ',' , '-'
      * @param dayOfWeek  [0 - 6] long value & '*', ',' , '-'
      */
-    // TODO : CRON values should be a string which allows '*', '-', ',' and numbers
-    CRON(String minute, String hour, String dayOfMonth, String month, String dayOfWeek) {
+    // TODO : CRONTime values should be a string which allows '*', '-', ',' and numbers
+    CRONTime(String minute, String hour, String dayOfMonth, String month, String dayOfWeek) {
         this.minute = validateCRONExpression(minute) ? minute : WILDCARD;
         this.hour = validateCRONExpression(hour) ? hour : WILDCARD;
         this.dayOfMonth = validateCRONExpression(dayOfMonth) ? dayOfMonth : WILDCARD;
         this.month = validateCRONExpression(month) ? month : WILDCARD;
         this.dayOfWeek = validateCRONExpression(dayOfWeek) ? dayOfWeek : WILDCARD;
 
-        // TODO: initialize the adjusted com corresponding to the CRON expression
+        // TODO: initialize the adjusted com corresponding to the CRONTime expression
         this.executionTimeAdjustment = null;
     }
 
     /**
-     * Create CRON with specified minute, hour, dayOfMoth, month and dayOfWeek, executionTimeAdjustment
+     * Create CRONTime with specified minute, hour, dayOfMoth, month and dayOfWeek, executionTimeAdjustment
      *
      * @param minute                  [0 - 59] long value & '*', ',' , '-'
      * @param hour                    [0 - 23] long value & '*', ',' , '-'
@@ -57,7 +57,7 @@ public class CRON implements JobTime {
      * @param dayOfWeek               [0 - 6] long value & '*', ',' , '-'
      * @param executionTimeAdjustment {@link TemporalAmount} for adjusting the next execution com
      */
-    CRON(String minute, String hour, String dayOfMonth, String month, String dayOfWeek, TemporalAmount executionTimeAdjustment) {
+    CRONTime(String minute, String hour, String dayOfMonth, String month, String dayOfWeek, TemporalAmount executionTimeAdjustment) {
         this.minute = minute;
         this.hour = hour;
         this.dayOfMonth = dayOfMonth;
@@ -66,12 +66,12 @@ public class CRON implements JobTime {
         this.executionTimeAdjustment = executionTimeAdjustment;
     }
 
-    // TODO: CRON expression validator
+    // TODO: CRONTime expression validator
     private boolean validateCRONExpression(String expr) {
         return false;
     }
 
-    // TODO: CRON time update
+    // TODO: CRONTime time update
     @Override
     public ZonedDateTime getNextExecution(ZonedDateTime current) {
         return current;
@@ -80,47 +80,47 @@ public class CRON implements JobTime {
     /**
      * To allow the building of a CRONBuilder minutely-schedule
      */
-    public static CRON buildMinutelyCronSchedule() {
-        return new CRON(WILDCARD, WILDCARD, WILDCARD, WILDCARD, WILDCARD, Duration.ofMinutes(1));
+    public static CRONTime buildMinutelyCronSchedule() {
+        return new CRONTime(WILDCARD, WILDCARD, WILDCARD, WILDCARD, WILDCARD, Duration.ofMinutes(1));
     }
 
     /**
      * To allow the building of a CRONBuilder hourly-schedule
      */
-    public static CRON buildHourlyCronSchedule() {
-        return new CRON("0", WILDCARD, WILDCARD, WILDCARD, WILDCARD, Duration.ofHours(1));
+    public static CRONTime buildHourlyCronSchedule() {
+        return new CRONTime("0", WILDCARD, WILDCARD, WILDCARD, WILDCARD, Duration.ofHours(1));
     }
 
     /**
      * To allow the building of a CRONBuilder daily-schedule (once a day, at midnight)
      */
-    public static CRON buildDailyCronSchedule() {
+    public static CRONTime buildDailyCronSchedule() {
         TemporalAmount amount = null;
-        return new CRON("0", "0", WILDCARD, WILDCARD, WILDCARD, amount);
+        return new CRONTime("0", "0", WILDCARD, WILDCARD, WILDCARD, amount);
     }
 
     /**
      * To allow the building of a CRONBuilder weekly-schedule (once a week at midnight on Sunday morning)
      */
-    public static CRON buildWeeklyCronSchedule() {
+    public static CRONTime buildWeeklyCronSchedule() {
         TemporalAmount amount = null;
-        return new CRON("0", "0", WILDCARD, WILDCARD, "0", amount);
+        return new CRONTime("0", "0", WILDCARD, WILDCARD, "0", amount);
     }
 
     /**
      * To allow the building of a CRONBuilder monthly-schedule (once a month at midnight on first day of month)
      */
-    public static CRON buildMonthlyCronSchedule() {
+    public static CRONTime buildMonthlyCronSchedule() {
         TemporalAmount amount = null;
-        return new CRON("0", "0", "1", WILDCARD, WILDCARD, amount);
+        return new CRONTime("0", "0", "1", WILDCARD, WILDCARD, amount);
     }
 
     /**
      * To allow the building of a CRONBuilder annually(yearly)-schedule (once a year at midnight on 1st of January)
      */
-    public static CRON buildYearlyCronSchedule() {
+    public static CRONTime buildYearlyCronSchedule() {
         TemporalAmount amount = null;
-        return new CRON("0", "0", "1", "1", WILDCARD, amount);
+        return new CRONTime("0", "0", "1", "1", WILDCARD, amount);
     }
 
 }

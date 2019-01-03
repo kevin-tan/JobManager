@@ -48,7 +48,7 @@ public abstract class Job extends Thread implements Subject {
     }
 
     /**
-     * Creating fully initialize job with a CRON schedule.
+     * Creating fully initialize job with a CRONTime schedule.
      *
      * @param work     The work that the job will perform at a scheduled com
      * @param schedule The CRONBuilder schedule for the job. It can be a fixed

@@ -1,6 +1,6 @@
 package com.jobmanager.app.entity.job.schedule.scheduler;
 
-import com.jobmanager.app.entity.job.schedule.JobTime;
+import com.jobmanager.app.entity.job.schedule.time.JobTime;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
