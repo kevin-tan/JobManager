@@ -1,6 +1,6 @@
 package com.jobmanager.app.api.service;
 
-import com.jobmanager.app.entity.job.Job;
+import com.jobmanager.app.entity.job.parser.JobParser;
 import com.jobmanager.app.manager.JobManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,11 @@ public class JobService {
         this.jobManager = jobManager;
     }
 
-    public List<Job> getAllJobs(){
-        return new LinkedList<>(jobManager.getJobPool().values());
+    public List<?> getAllJobs(){
+        List jobs = new LinkedList<>();
+        for(Long key: jobManager.getJobPool().keySet()){
+            jobs.add(JobParser.getParsedJob(jobManager.getJobPool().get(key)));
+        }
+        return jobs;
     }
-
 }

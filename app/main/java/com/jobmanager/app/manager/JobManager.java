@@ -46,7 +46,7 @@ public class JobManager {
 
     public void runAllJobs() {
         for(Long key: jobPool.keySet()){
-            jobPool.get(key).run();
+            jobPool.get(key).start();
         }
     }
 }

@@ -14,7 +14,7 @@ public class TestJob extends Job {
         super(() -> {
             System.err.println("Hello world!");
             ZonedDateTime c = ZonedDateTime.now();
-            ZonedDateTime n = c.plusSeconds(15);
+            ZonedDateTime n = c.plusSeconds(5);
             while (c.isBefore(n)) {
                 c = ZonedDateTime.now();
             }

@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * Created by Kevin Tan 2018-12-15
  */
 
-@ComponentScan(basePackages = {"com.jobmanager.app", "com.jobmanager.app.entity.dao"})
+@ComponentScan("com.jobmanager.app")
 @EntityScan("com.jobmanager.app")
 @EnableJpaRepositories
 @SpringBootApplication
