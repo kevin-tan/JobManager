@@ -1,4 +1,4 @@
-package com.jobmanager.app.manager.updator;
+package com.jobmanager.app.manager.updater;
 
 import com.jobmanager.app.entity.dao.JobRepository;
 import com.jobmanager.app.entity.job.Job;
