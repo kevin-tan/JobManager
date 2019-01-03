@@ -5,6 +5,9 @@ import com.jobmanager.app.entity.job.Job;
 import com.jobmanager.app.pattern.observer.Observer;
 import com.jobmanager.app.pattern.observer.Subject;
 
+/**
+ * This class is responsible for attaching to a Job in order to update the current status in the database.
+ */
 public class JobUpdater implements Observer {
 
     private final JobRepository jobRepository;
