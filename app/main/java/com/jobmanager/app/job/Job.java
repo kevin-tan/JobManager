@@ -1,7 +1,7 @@
 package com.jobmanager.app.job;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jobmanager.app.job.schedule.CRONSchedule;
+import com.jobmanager.app.job.schedule.scheduler.JobTimeScheduler;
 import com.jobmanager.app.job.status.Status;
 import lombok.Data;
 
@@ -25,7 +25,7 @@ public abstract class Job extends Thread {
     /* CRONBuilder schedule for the job to run */
     @Transient
     @JsonIgnore
-    private CRONSchedule schedule;
+    private JobTimeScheduler schedule;
 
     /**
      * Creating a job with no {@link #target} or {@link #schedule}
@@ -40,13 +40,13 @@ public abstract class Job extends Thread {
     /**
      * Creating fully initialize job with a CRON schedule.
      *
-     * @param work     The work that the job will perform at a scheduled time
+     * @param work     The work that the job will perform at a scheduled com
      * @param schedule The CRONBuilder schedule for the job. It can be a fixed
-     *                 schedule or a one time run
+     *                 schedule or a one com run
      * @return {@link Job} Returns fully initialized Job instance
      * @see #run()
      */
-    public Job(Runnable work, CRONSchedule schedule) {
+    public Job(Runnable work, JobTimeScheduler schedule) {
         super(work);
         this.schedule = schedule;
     }
@@ -61,7 +61,7 @@ public abstract class Job extends Thread {
         do {
             jobStatus = Status.SCHEDULED;
             ZonedDateTime now = ZonedDateTime.now();
-            while(now.isBefore(schedule.getNextExecutionTime()));
+            while(now.isBefore(schedule.getNextExecutionTime())){ now = ZonedDateTime.now(); }
             jobStatus = Status.RUNNING;
             schedule.calculateNextExecution(now);
             super.run();

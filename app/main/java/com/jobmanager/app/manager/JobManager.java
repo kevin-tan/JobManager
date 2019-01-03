@@ -57,4 +57,9 @@ public class JobManager {
         return jobCreator.getInstanceForClassName(className);
     }
 
+    public void runAllJobs() {
+        for(Job job: jobPool){
+            job.run();
+        }
+    }
 }
