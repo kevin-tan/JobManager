@@ -1,4 +1,4 @@
-package com.jobmanager.app.job.status;
+package com.jobmanager.app.entity.job.status;
 
 /**
  * Status enum class that represents the current job status.

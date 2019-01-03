@@ -1,17 +1,15 @@
 package com.jobmanager.app.manager;
 
-import com.jobmanager.app.job.Job;
+import com.jobmanager.app.entity.dao.JobRepository;
+import com.jobmanager.app.entity.job.Job;
 import com.jobmanager.app.manager.classes.Jobs;
 import com.jobmanager.app.manager.creator.JobCreator;
+import com.jobmanager.app.manager.updator.JobUpdater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
-import java.util.List;
-
-/**
- * Created by Kevin Tan 2018-12-15
- */
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JobManager {
@@ -20,47 +18,33 @@ public class JobManager {
     private JobCreator jobCreator;
 
     /* List of jobs currently being managed by the JobManager */
-    private final List<Job> jobPool = new LinkedList<>();
+    private final Map<Long, Job> jobPool = new HashMap<>();
+
+    /* Spring CRUD Repository to save our Job entity to the SQL database */
+    private final JobRepository jobRepository;
 
     @Autowired
-    public JobManager(JobCreator jobCreator) {
+    public JobManager(JobCreator jobCreator, JobRepository jobRepository) {
         this.jobCreator = jobCreator;
-    }
-
-    /**
-     * Add new job to current {@link #jobPool}
-     *
-     * @param job Job to be added to the {@link JobManager}'s {@link #jobPool}
-     */
-    public void addJob(Job job) {
-        jobPool.add(job);
+        this.jobRepository = jobRepository;
     }
 
     /**
      * Create and add new job to current {@link #jobPool}
      *
-     * @param className The String name of class to be created
+     * @param jobName The String name of class to be created
      * @return {@link Job} Returns the job created
      */
-    public Job createAndAddNewJob(Jobs className) {
-        Job job = jobCreator.getInstanceForClassName(className);
-        jobPool.add(job);
+    public Job createAndAddNewJob(Jobs jobName) {
+        Job job = jobRepository.save(jobCreator.getInstanceForJob(jobName));
+        job.attach(new JobUpdater(jobRepository));
+        jobPool.put(job.getJob_id(), job);
         return job;
     }
 
-    /**
-     * Create new job
-     *
-     * @param className The String name of class to be created
-     * @return {@link Job} Returns the job created
-     */
-    public Job createNewJob(Jobs className) {
-        return jobCreator.getInstanceForClassName(className);
-    }
-
     public void runAllJobs() {
-        for(Job job: jobPool){
-            job.run();
+        for(Long key: jobPool.keySet()){
+            jobPool.get(key).run();
         }
     }
 }

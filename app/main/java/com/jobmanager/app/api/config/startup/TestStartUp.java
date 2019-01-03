@@ -1,6 +1,5 @@
 package com.jobmanager.app.api.config.startup;
 
-import com.jobmanager.app.job.classes.created.TestJob;
 import com.jobmanager.app.manager.JobManager;
 import com.jobmanager.app.manager.classes.Jobs;
 

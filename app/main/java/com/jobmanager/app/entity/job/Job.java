@@ -1,31 +1,41 @@
-package com.jobmanager.app.job;
+package com.jobmanager.app.entity.job;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jobmanager.app.job.schedule.scheduler.JobTimeScheduler;
-import com.jobmanager.app.job.status.Status;
+import com.jobmanager.app.entity.job.schedule.scheduler.JobTimeScheduler;
+import com.jobmanager.app.entity.job.status.Status;
+import com.jobmanager.app.pattern.observer.Observer;
+import com.jobmanager.app.pattern.observer.Subject;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 @Data
 @Entity
-public abstract class Job extends Thread {
+@Inheritance
+@EqualsAndHashCode(callSuper = true)
+public abstract class Job extends Thread implements Subject {
     /* Id of the job to be used to save into the database */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long job_id;
 
     /* The current status of the job */
     @Column(name = "JOB_STATUS")
+    @Enumerated(EnumType.STRING)
     private Status jobStatus;
 
     /* CRONBuilder schedule for the job to run */
     @Transient
     @JsonIgnore
     private JobTimeScheduler schedule;
+
+    @Transient
+    @JsonIgnore
+    private List<Observer> observers = new LinkedList<>();
 
     /**
      * Creating a job with no {@link #target} or {@link #schedule}
@@ -48,6 +58,7 @@ public abstract class Job extends Thread {
      */
     public Job(Runnable work, JobTimeScheduler schedule) {
         super(work);
+        this.jobStatus = Status.SCHEDULED;
         this.schedule = schedule;
     }
 
@@ -59,14 +70,35 @@ public abstract class Job extends Thread {
     @Override
     public void run() {
         do {
-            jobStatus = Status.SCHEDULED;
             ZonedDateTime now = ZonedDateTime.now();
             while(now.isBefore(schedule.getNextExecutionTime())){ now = ZonedDateTime.now(); }
-            jobStatus = Status.RUNNING;
+            setJobStatus(Status.RUNNING);
             schedule.calculateNextExecution(now);
             super.run();
+            setJobStatus(Status.SCHEDULED);
         } while (!schedule.isRunOnce());
-        jobStatus = Status.FINISHED;
+        setJobStatus(Status.FINISHED);
     }
 
+    void setJobStatus(Status status){
+        this.jobStatus = status;
+        notifyObserver();
+    }
+
+    @Override
+    public void notifyObserver() {
+        for(Observer observer: observers){
+            observer.update(this);
+        }
+    }
+
+    @Override
+    public void attach(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        this.observers.remove(observer);
+    }
 }

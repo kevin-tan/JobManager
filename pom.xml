@@ -42,7 +42,6 @@
     </dependencies>
 
     <modules>
-        <module>database</module>
         <module>app</module>
         <module>ui</module>
     </modules>

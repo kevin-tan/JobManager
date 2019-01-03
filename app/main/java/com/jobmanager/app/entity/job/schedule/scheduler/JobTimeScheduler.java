@@ -1,12 +1,12 @@
-package com.jobmanager.app.job.schedule.scheduler;
+package com.jobmanager.app.entity.job.schedule.scheduler;
 
-import com.jobmanager.app.job.schedule.JobTime;
+import com.jobmanager.app.entity.job.schedule.JobTime;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
 
 /**
- * JobTimeScheduler is used to set the CRONBuilder schedule for a {@link com.jobmanager.app.job.Job} to run on
+ * JobTimeScheduler is used to set the CRONBuilder schedule for a {@link com.jobmanager.app.entity.job.Job} to run on
  */
 @Data
 public class JobTimeScheduler {

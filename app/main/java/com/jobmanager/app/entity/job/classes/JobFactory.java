@@ -1,6 +1,6 @@
-package com.jobmanager.app.job.classes;
+package com.jobmanager.app.entity.job.classes;
 
-import com.jobmanager.app.job.Job;
+import com.jobmanager.app.entity.job.Job;
 
 @FunctionalInterface
 public interface JobFactory <T extends Job>{
