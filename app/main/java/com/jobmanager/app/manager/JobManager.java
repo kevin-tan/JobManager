@@ -5,12 +5,14 @@ import com.jobmanager.app.entity.job.Job;
 import com.jobmanager.app.manager.classes.Jobs;
 import com.jobmanager.app.manager.creator.JobCreator;
 import com.jobmanager.app.manager.updator.JobUpdater;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 @Component
 public class JobManager {
 
