@@ -1,6 +1,7 @@
 package com.jobmanager.app.manager;
 
 import com.jobmanager.app.job.Job;
+import com.jobmanager.app.manager.classes.Jobs;
 import com.jobmanager.app.manager.creator.JobCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,7 @@ public class JobManager {
      * @param className The String name of class to be created
      * @return {@link Job} Returns the job created
      */
-    public Job createAndAddNewJob(String className) {
+    public Job createAndAddNewJob(Jobs className) {
         Job job = jobCreator.getInstanceForClassName(className);
         jobPool.add(job);
         return job;
@@ -53,7 +54,7 @@ public class JobManager {
      * @param className The String name of class to be created
      * @return {@link Job} Returns the job created
      */
-    public Job createNewJob(String className) {
+    public Job createNewJob(Jobs className) {
         return jobCreator.getInstanceForClassName(className);
     }
 

@@ -2,6 +2,7 @@ package com.jobmanager.app.api.config.startup;
 
 import com.jobmanager.app.job.classes.created.TestJob;
 import com.jobmanager.app.manager.JobManager;
+import com.jobmanager.app.manager.classes.Jobs;
 
 import javax.annotation.PostConstruct;
 
@@ -19,7 +20,7 @@ public class TestStartUp {
     @PostConstruct
     public void run(){
         System.err.println("Startup...");
-        jobManager.createAndAddNewJob(TestJob.class.getSimpleName());
+        jobManager.createAndAddNewJob(Jobs.TEST_JOB);
         jobManager.runAllJobs();
     }
 
