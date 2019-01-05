@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {AppService} from "./app.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-app';
+  title = 'JobManager Dashboard';
+
+  constructor(private appService: AppService, private routing: Router){}
+
+  ngOnInit(){
+
+  }
+
 }
