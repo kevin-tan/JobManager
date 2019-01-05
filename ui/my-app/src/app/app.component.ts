@@ -9,11 +9,12 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
   title = 'JobManager Dashboard';
+  factories = [];
 
   constructor(private appService: AppService, private routing: Router){}
 
   ngOnInit(){
-
+    this.appService.getAllFactories().subscribe(data => console.log(data))
   }
 
 }

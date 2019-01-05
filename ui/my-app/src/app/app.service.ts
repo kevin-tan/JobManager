@@ -6,4 +6,8 @@ export class AppService {
 
   constructor(private http: HttpClient) { }
 
+  public getAllFactories(){
+      return this.http.get('../dashboard/getAllFactories');
+  }
+
 }

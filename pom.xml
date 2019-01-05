@@ -42,8 +42,7 @@
     </dependencies>
 
     <modules>
-        <module>app</module>
         <module>ui</module>
+        <module>app</module>
     </modules>
-
 </project>
