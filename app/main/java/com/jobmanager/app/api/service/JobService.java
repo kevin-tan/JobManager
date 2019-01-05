@@ -1,5 +1,6 @@
 package com.jobmanager.app.api.service;
 
+import com.jobmanager.app.entity.job.Job;
 import com.jobmanager.app.entity.job.parser.JobParser;
 import com.jobmanager.app.manager.JobManager;
 import com.jobmanager.app.manager.classes.Jobs;
@@ -34,5 +35,11 @@ public class JobService {
 
     public Set<Jobs> getAllFactories(){
         return jobManager.getAllFactories();
+    }
+
+    public Job createJob(){
+
+
+        return null;
     }
 }
