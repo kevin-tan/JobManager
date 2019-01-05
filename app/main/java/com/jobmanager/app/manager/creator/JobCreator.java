@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 public class JobCreator {
@@ -32,6 +33,10 @@ public class JobCreator {
      */
     public Job getInstanceForJob(Jobs className) {
         return factories.get(className).createInstance();
+    }
+
+    public Set<Jobs> getAllFactories(){
+        return factories.keySet();
     }
 
 }

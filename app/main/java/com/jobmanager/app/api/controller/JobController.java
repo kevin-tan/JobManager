@@ -13,18 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-@RequestMapping("/dashbaord")
+@RequestMapping("/dashboard")
 public class JobController {
 
-    protected final JobService jobService;
+    private final JobService jobService;
 
     @Autowired
-    public JobController(JobService jobService){
+    public JobController(JobService jobService) {
         this.jobService = jobService;
     }
 
     @GetMapping("/getJobs")
-    public ResponseEntity<?> getAllJobs(){
+    public ResponseEntity<?> getAllJobs() {
         return new ResponseEntity<>(jobService.getAllJobs(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllFactories")
+    public ResponseEntity<?> getAllFactories() {
+        return new ResponseEntity<>(jobService.getAllFactories(), HttpStatus.OK);
     }
 }

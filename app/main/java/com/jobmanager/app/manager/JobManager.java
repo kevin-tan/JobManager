@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @Component
@@ -48,5 +49,9 @@ public class JobManager {
         for(Long key: jobPool.keySet()){
             jobPool.get(key).start();
         }
+    }
+
+    public Set<Jobs> getAllFactories(){
+        return jobCreator.getAllFactories();
     }
 }
