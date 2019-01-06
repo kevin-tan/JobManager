@@ -18,6 +18,7 @@ import java.util.List;
 @Inheritance
 @EqualsAndHashCode(callSuper = true)
 public abstract class Job extends Thread implements Subject {
+
     /* Id of the job to be used to save into the database */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +38,7 @@ public abstract class Job extends Thread implements Subject {
     @JsonIgnore
     private JobTimeScheduler schedule;
 
+    /* List of observers to be notified on state change of this job */
     @Transient
     @JsonIgnore
     private List<Observer> observers = new LinkedList<>();

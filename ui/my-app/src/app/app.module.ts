@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {AppService} from "./app.service";
 import {HttpClientModule} from "@angular/common/http";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    BrowserAnimationsModule
   ],
   providers: [AppService],
   bootstrap: [AppComponent]

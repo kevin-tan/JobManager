@@ -3,6 +3,34 @@
   <h1>
     {{ title }}
   </h1>
+  <hr/>
+</div>
+
+<div class="p-3">
+  <h2>Scheduled Jobs</h2>
+  <table mat-table [dataSource]="factories" class="mat-elevation-z8">
+    <ng-container matColumnDef="jobName">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let job"> {{job.jobName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="jobStatus">
+      <th mat-header-cell *matHeaderCellDef> Status</th>
+      <td mat-cell *matCellDef="let job">
+        <span *ngIf="job.status == RUNNING; else elseBlock" >
+          <span class="bg-success text-white">{{job.status}}</span>
+          <span class="spinner-border spinner-border-sm"></span>
+        </span>
+        <ng-template #elseBlock >
+          <span class="bg-info text-white">{{job.status}}</span>
+          <span class="fa">&#xf017;</span>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
 
 <router-outlet></router-outlet>
