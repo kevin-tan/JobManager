@@ -3,6 +3,7 @@ package com.jobmanager.app.entity.job.classes.created;
 import com.jobmanager.app.entity.job.Job;
 import com.jobmanager.app.entity.job.schedule.time.basic.BasicTime;
 import com.jobmanager.app.entity.job.schedule.scheduler.JobTimeScheduler;
+import com.jobmanager.app.manager.classes.Jobs;
 
 import javax.persistence.Entity;
 import java.time.ZonedDateTime;
@@ -18,6 +19,6 @@ public class TestJob extends Job {
             while (c.isBefore(n)) {
                 c = ZonedDateTime.now();
             }
-        }, new JobTimeScheduler(false, BasicTime.buildBasicTime(10, 0, 0, 0)));
+        }, new JobTimeScheduler(false, BasicTime.buildBasicTime(10, 0, 0, 0)), Jobs.TEST_JOB.getClassName());
     }
 }

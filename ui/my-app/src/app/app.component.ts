@@ -9,12 +9,16 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
   title = 'JobManager Dashboard';
-  factories = [];
+  factories = null;
+  jobs = null;
 
   constructor(private appService: AppService, private routing: Router){}
 
   ngOnInit(){
-    this.appService.getAllFactories().subscribe(data => console.log(data))
+    // Gets array of factories
+    this.appService.getAllFactories().subscribe(data => this.factories = data);
+    // Gets all current jobs
+    this.appService.getAllJobs().subscribe(data => this.jobs = data);
   }
 
 }

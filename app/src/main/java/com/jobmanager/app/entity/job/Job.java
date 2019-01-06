@@ -28,6 +28,10 @@ public abstract class Job extends Thread implements Subject {
     @Enumerated(EnumType.STRING)
     private Status jobStatus;
 
+    /* Name of the current job */
+    @Column(name="JOB_NAME")
+    private String jobName;
+
     /* CRONBuilder schedule for the job to run */
     @Transient
     @JsonIgnore
@@ -56,10 +60,11 @@ public abstract class Job extends Thread implements Subject {
      * @return {@link Job} Returns fully initialized Job instance
      * @see #run()
      */
-    public Job(Runnable work, JobTimeScheduler schedule) {
+    public Job(Runnable work, JobTimeScheduler schedule, String jobName) {
         super(work);
         this.jobStatus = Status.SCHEDULED;
         this.schedule = schedule;
+        this.jobName = jobName;
     }
 
     /**

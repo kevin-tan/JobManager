@@ -14,15 +14,17 @@ public final class JobParser {
     static class JobDTO{
         private Long id;
         private Status status;
+        private String jobName;
 
-        JobDTO(Long id, Status status){
+        JobDTO(Long id, Status status, String jobName){
             this.id = id;
             this.status =status;
+            this.jobName = jobName;
         }
     }
 
     public static JobDTO getParsedJob(Job job){
-        return new JobDTO(job.getJob_id(), job.getJobStatus());
+        return new JobDTO(job.getJob_id(), job.getJobStatus(), job.getJobName());
     }
 
 }

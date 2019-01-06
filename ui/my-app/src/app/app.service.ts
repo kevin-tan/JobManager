@@ -10,4 +10,8 @@ export class AppService {
       return this.http.get('../dashboard/getAllFactories');
   }
 
+  public getAllJobs(){
+    return this.http.get('../dashboard/getAllJobs');
+  }
+
 }
