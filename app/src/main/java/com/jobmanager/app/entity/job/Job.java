@@ -30,7 +30,7 @@ public abstract class Job extends Thread implements Subject {
     private Status jobStatus;
 
     /* Name of the current job */
-    @Column(name="JOB_NAME")
+    @Column(name = "JOB_NAME")
     private String jobName;
 
     /* CRONBuilder schedule for the job to run */
@@ -78,23 +78,34 @@ public abstract class Job extends Thread implements Subject {
     public void run() {
         do {
             ZonedDateTime now = ZonedDateTime.now();
-            while(now.isBefore(schedule.getNextExecutionTime())){ now = ZonedDateTime.now(); }
+            while (now.isBefore(schedule.getNextExecutionTime())) { now = ZonedDateTime.now(); }
             setJobStatus(Status.RUNNING);
             schedule.calculateNextExecution(now);
             super.run();
             setJobStatus(Status.SCHEDULED);
-        } while (!schedule.isRunOnce());
+        } while (!schedule.isRunOnce() || !interrupted());
         setJobStatus(Status.FINISHED);
     }
 
-    void setJobStatus(Status status){
+    @Override
+    public void interrupt() {
+        super.interrupt();
+        try {
+            join();
+            setJobStatus(Status.STOPPED);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void setJobStatus(Status status) {
         this.jobStatus = status;
         notifyObserver();
     }
 
     @Override
     public void notifyObserver() {
-        for(Observer observer: observers){
+        for (Observer observer : observers) {
             observer.update(this);
         }
     }
